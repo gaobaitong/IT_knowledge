@@ -1,20 +1,23 @@
 
 Window Path : ${HOME}
+
 Linus/MacOS Path : ~
 
 
 ```
+
 source $VIMRUNTIME/vimrc_example.vim
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
 
-" Windows OS
-"au GUIEnter * simalt ~x
-" Linux OS, need to install wmctrl 
+" Linux, need to install wmctrl
 "au GUIEnter * call MaximizeWindow()
 "function! MaximizeWindow()
 "silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
 "endfunction
+" Windows
+"au GUIEnter * simalt ~x
+" macOS
 
 "-------------------------------------------------------------------------------
 " VIM Setting
@@ -44,14 +47,15 @@ endif
 
 " GUI Font
 if has("gui_running")
-    "set guifont=Fantasque_Sans_Mono:h14 "Windows
-    "set guifont=Fantasque\ Sans\ Mono\ 14 "Linux/MacOSX
-    set guifont=Monaco\ 12
+    "set guifont=Fantasque\ Sans\ Mono\ 14 "Linux
+    "set guifont=Fantasque_Sans_Mono:h14 "Windows/macOS
+    "set guifont=Monaco\ 12
+    "set guifont=Monaco:h12
 endif
- 
+
 " Number of Command History
 set history=200
- 
+
 " File Type
 set ffs=unix,dos,mac
 
@@ -59,7 +63,7 @@ set ffs=unix,dos,mac
 set nobackup
 set nowb
 
-" No Prsistent Undo 
+" No Prsistent Undo
 set noundofile
 
 " Line Number
@@ -74,13 +78,13 @@ set tabstop=4
 set softtabstop=4
 
 " Disabled display Menu Bar, Tool Bar and Scroll Bars
-"if has("gui_running")
+if has("gui_running")
     set guioptions-=m
     "set guioptions-=T
-    "set guioptions-=L 
-    "set guioptions-=r  
+    "set guioptions-=L
+    "set guioptions-=r
     "set guioptions-=b
-"endif
+endif
 
 " highlight current line/column
 set cursorline
@@ -92,22 +96,22 @@ set laststatus=2 "always show the status line
 set ruler
 
 " Search
-set incsearch "incremental 
+set incsearch "incremental
 set hlsearch  "highlight
 
 " Indent
-"set smartindent 
+"set smartindent
 "set autoindent
 "set ai!
 
 " Swith Window Once, not Twice
-"nnoremap <C-J> <C-W><C-J> "Ctrl-j to move down a split  
-"nnoremap <C-K> <C-W><C-K> "Ctrl-k to move up a split  
-"nnoremap <C-L> <C-W><C-L> "Ctrl-l to move right a split  
+"nnoremap <C-J> <C-W><C-J> "Ctrl-j to move down a split
+"nnoremap <C-K> <C-W><C-K> "Ctrl-k to move up a split
+"nnoremap <C-L> <C-W><C-L> "Ctrl-l to move right a split
 "nnoremap <C-H> <C-W><C-H> "Ctrl-h to move left a split
 
-" Clear Spaces at the end of the line 
-"nmap <F7> :%s/\s\+$//g<cr>:noh<cr> 
+" Clear Spaces at the end of the line
+"nmap <F7> :%s/\s\+$//g<cr>:noh<cr>
 
 "-------------------------------------------------------------------------------
 " Plugins Setting
@@ -118,59 +122,29 @@ if exists("tags")
     set tags=./tags
 endif
 
-" vim-plug 
-call plug#begin('~/.vim/plugged') " Linux
-"call plug#begin('C:\Users\baitong\vimfiles\plug') " Windows
-Plug 'Shougo/neocomplete.vim'
-Plug 'vim-airline/vim-airline'
-call plug#end()
-"" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-"Plug 'junegunn/vim-easy-align'
-"" Any valid git URL is allowed
-"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-"" Multiple Plug commands can be written in a single line using | separators
-"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-"" On-demand loading
-"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-"" Using a non-master branch
-"Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-"" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-"Plug 'fatih/vim-go', { 'tag': '*' }
-"" Plugin options
-"Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-"" Plugin outside ~/.vim/plugged with post-update hook
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"" Unmanaged plugin (manually installed and updated)
-"Plug '~/my-prototype-plugin'
-
 " new-omni-completion
 filetype plugin indent on
 set completeopt=longest,menu
 
-" NeoComplete
-let g:acp_enableAtStartup=0
-let g:neocomplete#enable_at_startup=1
-let g:neocomplete#enable_smart_case=1
-let g:neocomplete#sources#syntax#min_keyword_length=3
-let g:neocomplete#lock_buffer_name_pattern='\*ku\*'
-let g:neocomplete#sources#dictionary#dictionaries={
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif "define keyword.
-let g:neocomplete#keyword_patterns['default']='\h\w*'
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" 
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-let g:neocomplete#enable_auto_select=1
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns={}
-endif
+" vim-plug
+call plug#begin('~/.vim/plugged') " Linux/macOS
+"call plug#begin('C:\Users\xxx\vimfiles\plugged') " Windows
+Plug 'vim-airline/vim-airline'
+Plug 'skywind3000/vim-auto-popmenu'
+Plug 'vhda/verilog_systemverilog.vim'
+call plug#end()
 
-" EasyGre
+" vim-auto-popmenu
+" enable this plugin for filetypes, '*' for all files.
+let g:apc_enable_ft = {'*':1}
+" source for dictionary, current or other loaded buffers, see ':help cpt'
+set cpt=.,k,w,b
+" don't select the first item.
+set completeopt=menu,menuone,noselect
+" suppress annoy messages.
+set shortmess+=c
+
+" EasyGrep
 "let g:EasyGrepMode=2
 "let g:EasyGrepCommand=0
 "let g:EasyGrepRecursive=0
